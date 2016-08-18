@@ -9,5 +9,3 @@ indent() {
 }
 
 bin/clean $BUILD_DIR | indent
-
-bin/rdfind -makehardlinks true -outputname $BUILD_DIR/.rdfind.txt $BUILD_DIR | indent

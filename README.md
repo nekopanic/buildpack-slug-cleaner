@@ -1,9 +1,19 @@
 Slug cleaner buildpack
 ======================
 
-This buildpack helps large applications get in under the Heroku size limit. It does a couple of neat things:
+This buildpack helps large applications get in under the Heroku size limit. All it does is re-apply the `.slugignore`, preventing files from reaching the final slug. Add it to the end of your buildpacks list so it runs last:
 
-1. Re-applies `.slugignore` at the end of the build. Usually `.slugignore` is only at the start of the build, leaving a lot of intermediate build artifacts in the slug.
-2. Deduplicates files using the [rdfind tool](https://rdfind.pauldreik.se/) so they are only stored once in the slug. Once unpacked into a running dyno they become separate files automatically.
+```
+$ heroku buildpacks:add https://github.com/stevo550/buildpack-slug-cleaner.git
+```
 
-You can find the output of rdfind in the `.rdfind.txt` file compiled into the slug (`heroku run bash` and `cat rdfind.txt` from there).
+Many apps might like to add this to their `.slugignore` file:
+
+```
+# Rails asset pipeline cache won't be touched in production
+tmp/cache
+```
+
+The easiest way to investigate slug sizes is to do a `heroku run bash` on the last passing build and `du -hs *` from there. Slug sizes are usually something that increase over time, so you might find something useful even off a successful build.
+
+If you find any good suggestions for other languages and frameworks send in a pull request or issue and I'll add it to the above.
