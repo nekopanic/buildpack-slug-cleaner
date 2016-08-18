@@ -7,21 +7,23 @@ indent() {
 shopt -s globstar
 
 cd $1
-while read line; do
-  [[ -z "$line" ]] && continue # ignore blank lines
-  [[ "$line" =~ ^#.*$ ]] && continue # ignore commented lines
-  [[ "$line" =~ ^!.*$ ]] && continue # inverse not supported in slugignore
+if [[ -f ".slugignore" ]]; then
+  while read line; do
+    [[ -z "$line" ]] && continue # ignore blank lines
+    [[ "$line" =~ ^#.*$ ]] && continue # ignore commented lines
+    [[ "$line" =~ ^!.*$ ]] && continue # inverse not supported in slugignore
 
-  echo "Deleting '$line'"
+    echo "Deleting '$line'"
 
-  # Adding "/" to the start if it isn't there makes the glob work
-  if [[ ! "$line" =~ ^/.*$ ]]; then
-  	line="/$line"
-  fi
+    # Adding "/" to the start if it isn't there makes the glob work
+    if [[ ! "$line" =~ ^/.*$ ]]; then
+    	line="/$line"
+    fi
 
-  ls -1d **$line 2>/dev/null |
-  while read filepath; do
-    echo rm -rf "$filepath" | indent
-  done
+    ls -1d **$line 2>/dev/null |
+    while read filepath; do
+      rm -rvf "$filepath" | indent
+    done
 
-done < .gitignore
+  done < .slugignore
+fi

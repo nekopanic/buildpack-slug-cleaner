@@ -4,6 +4,10 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-bin/clean $BUILD_DIR
+indent() {
+  sed -u 's/^/       /'
+}
 
-bin/rdfind -makehardlinks true -outputname .rdfind.txt $BUILD_DIR
+bin/clean $BUILD_DIR | indent
+
+bin/rdfind -makehardlinks true -outputname $BUILD_DIR/.rdfind.txt $BUILD_DIR | indent
