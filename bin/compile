@@ -8,4 +8,7 @@ indent() {
   sed -u 's/^/       /'
 }
 
+
+bin/print-large-sizes | indent
+
 bin/clean $BUILD_DIR | indent

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "Searching for files/directories at 20MB or more..."
+du -m . --max-depth 4 | awk "\$1 >= 20" | indent
