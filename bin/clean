@@ -9,9 +9,8 @@ shopt -s globstar
 cd $1
 if [[ -f ".slugignore" ]]; then
   while read line; do
-    [[ -z "$line" ]] && continue # ignore blank lines
-    [[ "$line" =~ ^#.*$ ]] && continue # ignore commented lines
-    [[ "$line" =~ ^!.*$ ]] && continue # inverse not supported in slugignore
+    [[ ! "$line" =~ ^!.*$ ]] && continue # we only look for lines starting with !
+    line=${line:1}
 
     echo "Deleting '$line'"
 
