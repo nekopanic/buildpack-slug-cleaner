@@ -14,6 +14,9 @@ Many apps might like to add this to their `.slugignore` file:
 !tmp/cache
 # App images should have been compiled into public/
 !app/assets/images
+# Known useless files and directories
+!wkhtmltopdf-darwin-x86
+!wkhtmltopdf-linux-x86
 ```
 
 The easiest way to investigate slug sizes is to do a `heroku run bash` on the last passing build and `du -hs *` from there. Slug sizes are usually something that increase over time, so you might find something useful even off a successful build.
