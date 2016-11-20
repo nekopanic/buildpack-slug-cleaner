@@ -4,5 +4,5 @@ indent() {
   sed -u 's/^/       /'
 }
 
-echo "Searching for files/directories at 20MB or more..."
+echo "Searching for files/directories at 10MB or more..."
 du -m . --max-depth 6 | awk "\$1 >= 10" | indent
