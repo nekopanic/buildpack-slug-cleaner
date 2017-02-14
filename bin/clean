@@ -21,7 +21,7 @@ if [[ -f ".slugignore" ]]; then
 
     ls -1d **$line 2>/dev/null |
     while read filepath; do
-      rm -rvf "$filepath"
+      rm -rvf "$filepath" &>/dev/null
     done
 
   done < .slugignore
